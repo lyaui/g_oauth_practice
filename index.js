@@ -3,6 +3,7 @@ dotenv.config();
 
 const express = require('express');
 const app = express();
+const authRoutes = require('./routes/auth-routes');
 
 const mongoose = require('mongoose');
 
@@ -18,6 +19,8 @@ mongoose
 app.set('view engine', 'ejs');
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+app.use('/auth', authRoutes);
 
 app.get('/', (req, res) => {
   return res.render('index');
