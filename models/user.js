@@ -6,7 +6,7 @@ const userSchema = new Schema({
   name: {
     type: String,
     required: true,
-    minLength: 6,
+    minLength: 1,
     maxLength: 255,
   },
   googleID: {

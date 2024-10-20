@@ -3,6 +3,12 @@ const GoogleStrategy = require('passport-google-oauth2').Strategy;
 
 const User = require('../models/user');
 
+passport.serializeUser((user, done) => {
+  console.log('serialize 使用者');
+  done(null, user._id); // serialize 後，將 db 中的 id 存入 session 中內部
+  // 並且將 id 簽名後，以 cookie 的形式給使用者...
+});
+
 passport.use(
   new GoogleStrategy(
     {
@@ -18,7 +24,7 @@ passport.use(
       const foundUser = await User.findOne({ googleID: profile.id }).exec();
       if (foundUser) {
         console.log('使用者已註冊過，無須存入 DB');
-        console.log(foundUser);
+        done(null, foundUser);
       } else {
         console.log('新用戶，須存入 DB');
         let newUser = User({
