@@ -5,6 +5,9 @@ const express = require('express');
 const app = express();
 const authRoutes = require('./routes/auth-routes');
 
+// require 就會自動執行
+require('./config/passport');
+
 const mongoose = require('mongoose');
 
 mongoose
