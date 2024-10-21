@@ -3,10 +3,12 @@ dotenv.config();
 
 const express = require('express');
 const app = express();
-const authRoutes = require('./routes/auth-routes');
-const profileRoutes = require('./routes/profile');
 
 const session = require('express-session');
+const flash = require('connect-flash');
+
+const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile');
 
 // require 就會自動執行
 require('./config/passport');
@@ -38,6 +40,14 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
+app.use(flash());
+app.use((req, res, next) => {
+  res.locals.success_msg = req.flash('success_msg');
+  res.locals.error_msg = req.flash('error_msg');
+  res.locals.error = req.flash('error');
+
+  next();
+});
 
 app.use('/auth', authRoutes);
 app.use('/profile', profileRoutes);
