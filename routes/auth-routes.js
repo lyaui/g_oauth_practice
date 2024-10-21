@@ -14,7 +14,15 @@ router.get(
 );
 
 router.get('/google/redirect', passport.authenticate('google'), (req, res) => {
+  console.log('/google/redirect');
   return res.redirect('/profile');
+});
+
+router.get('/logout', (req, res) => {
+  req.logout((err) => {
+    if (err) return res.send(err);
+    return res.redirect('/');
+  });
 });
 
 module.exports = router;
