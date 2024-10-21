@@ -9,6 +9,12 @@ passport.serializeUser((user, done) => {
   // 並且將 id 簽名後，以 cookie 的形式給使用者...
 });
 
+passport.deserializeUser(async (_id, done) => {
+  console.log('Deserializing user now');
+  const foundUser = await User.findOne({ _id });
+  done(null, foundUser); // 將 req.user 此屬性設定為 foundUser
+});
+
 passport.use(
   new GoogleStrategy(
     {

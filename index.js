@@ -4,6 +4,7 @@ dotenv.config();
 const express = require('express');
 const app = express();
 const authRoutes = require('./routes/auth-routes');
+const profileRoutes = require('./routes/profile');
 
 const session = require('express-session');
 
@@ -39,6 +40,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use('/auth', authRoutes);
+app.use('/profile', profileRoutes);
 
 app.get('/', (req, res) => {
   return res.render('index');
